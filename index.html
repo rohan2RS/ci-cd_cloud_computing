@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple Chatbot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 40px;
+    }
+    h1 {
+      color: #333;
+    }
+    #chatContainer {
+      width: 380px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .message {
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 18px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    .user {
+      background: #d1eaff;
+      align-self: flex-end;
+      text-align: right;
+    }
+    .bot {
+      background: #e2ffe2;
+      align-self: flex-start;
+      text-align: left;
+    }
+    #inputContainer {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+    }
+    input[type="text"] {
+      width: 250px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+    }
+    button {
+      margin-left: 10px;
+      padding: 10px 15px;
+      border: none;
+      background-color: #0066cc;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Simple Chatbot</h1>
+  <div id="chatContainer"></div>
+
+  <div id="inputContainer">
+    <input type="text" id="userInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const chatContainer = document.getElementById("chatContainer");
+
+    function sendMessage() {
+      const inputField = document.getElementById("userInput");
+      const userText = inputField.value.trim();
+      if (!userText) return;
+
+      addMessage(userText, "user");
+
+      // Simple static response logic
+      let botReply = "I'm not sure how to respond to that.";
+      if (userText.toLowerCase().includes("hello")) botReply = "Hi there! 👋";
+      else if (userText.toLowerCase().includes("help")) botReply = "Sure, I’m here to help. Try asking a question.";
+      else if (userText.toLowerCase().includes("bye")) botReply = "Goodbye! Have a great day 😊";
+
+      setTimeout(() => addMessage(botReply, "bot"), 500);
+      inputField.value = "";
+    }
+
+    function addMessage(text, sender) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = `message ${sender}`;
+      msgDiv.innerText = text;
+      chatContainer.appendChild(msgDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
